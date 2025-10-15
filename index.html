@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        #total-sales {
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sales Report</h1>
+    <p>Total Sales: <span id="total-sales">Calculating...</span></p>
+
+    <script>
+        const csvContent = `product,sales
+Apple,155
+Banana,75
+Orange,125`;
+
+        function calculateTotalSales(csv) {
+            const rows = csv.trim().split('\n');
+            let totalSales = 0;
+
+            // Skip the header row
+            for (let i = 1; i < rows.length; i++) {
+                const columns = rows[i].split(',');
+                // The sales value is in the second column (index 1)
+                const sales = parseInt(columns[1], 10);
+
+                if (!isNaN(sales)) {
+                    totalSales += sales;
+                }
+            }
+            return totalSales;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalSales = calculateTotalSales(csvContent);
+            document.getElementById('total-sales').textContent = totalSales;
+        });
+    </script>
+</body>
+</html>
